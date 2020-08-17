@@ -25,7 +25,7 @@ def fcf_function(url):
         fcf_list = [float(fcf_list1[i].text.replace(",",""))+fcf_list[i] for i in range(len(fcf_list1))]
         fcf_ans = financial_index.compute_fcf(fcf_list)
         if(fcf_ans=="error"):
-            error = 5
+            error = 6
             print(label_name["fcf"]+" input data error")
         else:
             dict["fcf"] = fcf_ans
