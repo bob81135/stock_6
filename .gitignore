@@ -16,3 +16,4 @@ test/*
 __pycache__
 
 *.csv
+rt-sandbox
