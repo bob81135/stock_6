@@ -143,6 +143,12 @@ def compute_it(it_list: list):
         it_sum = sum(it_list)
         if (it_list.count(0.0) == 4):
             return "N"
+        elif ((it_list[0] < it_list[1] and it_list[1] < it_list[2]
+               and (0.2 < (it_list[1] - it_list[0])/it_list[1]+(it_list[2] - it_list[1])/it_list[2]))):
+            return "BB"
+        elif ((it_list[1] < it_list[2] and it_list[2] < it_list[3]
+               and ((0.2 < (it_list[2] - it_list[1])/it_list[2]+(it_list[3] - it_list[2])/it_list[3])))):
+            return "BB"
         elif (drop == 0 and it_sum >= 6):
             return "AA"
         elif (drop == 0 and it_sum < 6):
@@ -151,12 +157,6 @@ def compute_it(it_list: list):
             return "C"
         elif (drop >= 1):
             return "B"
-        elif ((it_list[0] > it_list[1] and it_list[1] > it_list[2]
-               and (it_list[2] - it_list[0]) / it_list[2] > 0.2)):
-            return "BB"
-        elif ((it_list[1] > it_list[2] and it_list[2] > it_list[3]
-               and (it_list[3] - it_list[1]) / it_list[3] > 0.2)):
-            return "BB"
         return "error"
     except:
         return "error"
