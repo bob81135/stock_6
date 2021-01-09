@@ -136,27 +136,33 @@ class Processor():
             self.error_code = True
             print(label_name["it"] + " input data error")
 
-def main():
-    while(1):
-        stock_id = input("輸入股票代碼:")
-        url = "https://jdata.yuanta.com.tw/z/zc/zcr/zcr_" + stock_id + ".djhtm"
-        url1 = "https://jdata.yuanta.com.tw/z/zc/zc3/zc3_" + stock_id + ".djhtm"
-        url2 = "https://jdata.yuanta.com.tw/z/zc/zch/zch_" + stock_id + ".djhtm"
+def stock(stock_id, stock_name):
+    # stock_id = input("輸入股票代碼:")
+    url = "https://jdata.yuanta.com.tw/z/zc/zcr/zcr_" + stock_id + ".djhtm"
+    url1 = "https://jdata.yuanta.com.tw/z/zc/zc3/zc3_" + stock_id + ".djhtm"
+    url2 = "https://jdata.yuanta.com.tw/z/zc/zch/zch_" + stock_id + ".djhtm"
 
-        processor = Processor()
-        processor.process_data(url)
-        processor.process_fcf(url1)
-        processor.process_argr(url2)
+    processor = Processor()
+    processor.process_data(url)
+    processor.process_fcf(url1)
+    processor.process_argr(url2)
 
-        if (processor.error_code is False and len(processor.data) == 6):
-            print(processor.stock_name)
-            total_score = 0
-            total_label = 0
-            for i in label_name:
-                print(label_name[i], ":", processor.data[i])
-                if (processor.data[i] != "N"):
-                    total_score += score[processor.data[i]]
-                    total_label += 1
-            print("total_score", ":", round(total_score / total_label, 1))
-        else:
-            print("have some data error")
+    if (processor.error_code is False and len(processor.data) == 6):
+        print(stock_name)
+        csv_list = []
+        csv_list.append(stock_id)
+        csv_list.append(stock_name)
+        total_score = 0
+        total_label = 0
+        for i in label_name:
+            print(label_name[i], ":", processor.data[i])
+            csv_list.append(processor.data[i])
+            if (processor.data[i] != "N"):
+                total_score += score[processor.data[i]]
+                total_label += 1
+        csv_list.append(round(total_score / total_label, 1))
+        print("total_score", ":", round(total_score / total_label, 1))
+        return csv_list
+    else:
+        print("have some data error")
+        return ["error"]
