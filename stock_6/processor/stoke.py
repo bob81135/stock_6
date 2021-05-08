@@ -166,3 +166,4 @@ def stock(stock_id, stock_name):
     else:
         print("have some data error")
         return ["error"]
+        
