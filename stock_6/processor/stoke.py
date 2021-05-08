@@ -99,7 +99,7 @@ class Processor():
                 self.error_code = True
                 print(label_name["opm"] + "input data error")
             else:
-                self.data["opm"] = eps_ans
+                self.data["opm"] = opm_ans
         except:
             self.error_code = True
             print(label_name["opm"] + "input data error")
