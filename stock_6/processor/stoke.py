@@ -56,7 +56,7 @@ class Processor():
             index = argr.parent
             for _ in range(6):
                 index = index.next_sibling.next_sibling
-                argr = float((index.select("td")[4].text.replace(",", ""))[:-1])
+                argr = float((index.select('span')[4].text.replace(",", ""))[:-1])
                 argr_list.append(argr)
             argr_ans = financial_index.compute_argr(argr_list)
             if (argr_ans == "error"):
