@@ -23,15 +23,15 @@ class Processor():
         try:
             r = requests.get(url)
             soup = BeautifulSoup(r.text, "html.parser")
-            fcf = soup.find('td', string="來自營運之現金流量")
+            fcf = soup.find('span', string="來自營運之現金流量")
             if (fcf == None):
-                fcf = soup.find('td', string=" 來自營運之現金流量")
-            fcf_list = fcf.parent.select('td')
+                fcf = soup.find('span', string=" 來自營運之現金流量")
+            fcf_list = fcf.parent.select('span')
             fcf_list = [float(i.text.replace(",", "")) for i in fcf_list[1:7]]
-            fcf = soup.find('td', string="投資活動之現金流量")
+            fcf = soup.find('span', string="投資活動之現金流量")
             if (fcf == None):
-                fcf = soup.find('td', string=" 投資活動之現金流量")
-            fcf_list1 = fcf.parent.select('td')
+                fcf = soup.find('span', string=" 投資活動之現金流量")
+            fcf_list1 = fcf.parent.select('span')
             fcf_list1 = fcf_list1[1:7]
             fcf_list = [
                 float(fcf_list1[i].text.replace(",", "")) + fcf_list[i]
@@ -51,7 +51,7 @@ class Processor():
         try:
             r = requests.get(url)
             soup = BeautifulSoup(r.text, "html.parser")
-            argr = soup.find('td', string="年/月")
+            argr = soup.find('span', string="年/月")
             argr_list = []
             index = argr.parent
             for _ in range(6):
@@ -74,8 +74,8 @@ class Processor():
         if (len(soup.title.text) > 7):
             self.stock_name = soup.title.text[:-7]
         try:
-            eps = soup.find('td', string="每股盈餘")
-            eps_list = eps.parent.select('td')
+            eps = soup.find('span', string="每股盈餘")
+            eps_list = eps.parent.select('span')
             eps_list = [float(i.text.replace(",", "")) for i in eps_list[1:5]]
             eps_ans = financial_index.compute_eps(eps_list)
             if (eps_ans == "error"):
@@ -88,10 +88,10 @@ class Processor():
             print(label_name["eps"] + " input data error")
 
         try:
-            opm = soup.find('td', string="營業利益率")
+            opm = soup.find('span', string="營業利益率")
             if (opm == None):
-                opm = soup.find('td', string="經常淨利成長率")
-            opm_list = opm.parent.select('td')
+                opm = soup.find('span', string="經常淨利成長率")
+            opm_list = opm.parent.select('span')
             opm_list = [float(i.text.replace(",", "")) for i in opm_list[1:5]]
             print(opm_list)
             opm_ans = financial_index.compute_opm(opm_list)
@@ -105,10 +105,10 @@ class Processor():
             print(label_name["opm"] + "input data error")
 
         try:
-            niatgr = soup.find('td', string="稅後淨利率")
+            niatgr = soup.find('span', string="稅後淨利率")
             if (niatgr == None):
-                niatgr = soup.find('td', string="稅後淨利率(A)")
-            niatgr_list = niatgr.parent.select('td')
+                niatgr = soup.find('span', string="稅後淨利率(A)")
+            niatgr_list = niatgr.parent.select('span')
             niatgr_list = [float(i.text.replace(",", "")) for i in niatgr_list[1:]]
             niatgr_ans = financial_index.compute_niatgr(niatgr_list)
             if (niatgr_ans == "error"):
@@ -120,11 +120,11 @@ class Processor():
             self.error_code = True
             print(label_name["niatgr"] + " input data error")
         try:
-            it = soup.find('td', string="存貨週轉率(次)")
+            it = soup.find('span', string="存貨週轉率(次)")
             if (it is None):
                 self.data["it"] = "N"
             else:
-                it_list = it.parent.select('td')
+                it_list = it.parent.select('span')
                 it_list = [float(i.text.replace(",", "")) for i in it_list[1:5]]
                 it_ans = financial_index.compute_it(it_list)
                 if (it_ans == "error"):
